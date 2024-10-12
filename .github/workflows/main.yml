@@ -17,6 +17,12 @@ jobs:
       with:
         python-version: 3.8
 
+        - name: Load .env file
+      uses: SpicyPizza/create-envfile@v1
+      with:
+        envkey_APP_KEY: DATABASE_URL
+        envkey_APP_SECRET: postgresql://mars:1005@161.35.15.35/adspay
+        file_name: .env
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:
@@ -28,4 +34,4 @@ jobs:
           git stash
           git pull
           git stash pop
-          uvicorn main:app --port=8001
+          uvicorn main:app --port=8000
