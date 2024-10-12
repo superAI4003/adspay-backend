@@ -25,5 +25,7 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
           cd /home/adspay-backend
+          git stash
           git pull
+          git stash pop
           uvicorn main:app --port=8001
