@@ -7,7 +7,7 @@ app = FastAPI()
 # Create database tables
 Base.metadata.create_all(bind=engine)
 
-app.include_router(auth.router, prefix="/auth",tags=["Auth"])
+app.include_router(auth.router, prefix="/auth1",tags=["Auth"])
 
 if __name__ == "__main__":
     import uvicorn
