@@ -26,4 +26,4 @@ jobs:
         script: |
           cd /home/adspay-backend
           git pull
-          uvicorn main:app --port=8002
+          uvicorn main:app --port=8001
