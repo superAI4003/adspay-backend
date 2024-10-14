@@ -7,6 +7,7 @@ from utils.security import hash_password, create_access_token, verify_password
 from pydantic import BaseModel
 from typing import Optional
 from datetime import timedelta
+from datetime import datetime
 
 router = APIRouter()
 
@@ -14,7 +15,9 @@ class User(BaseModel):
     username: str
     password: str
     email: str
-
+class UserL(BaseModel):
+    password: str
+    email: str
 class OTP(BaseModel):
     email: str
     otp: str
@@ -33,7 +36,8 @@ async def signup(user: User, db: Session = Depends(get_db)):
     new_user = UserModel(
         username=user.username,
         email=user.email,
-        hashed_password= hash_password(user.password)
+        hashed_password= hash_password(user.password),
+        registered_at=datetime.utcnow() 
     )
     db.add(new_user)
     db.commit()
@@ -41,8 +45,8 @@ async def signup(user: User, db: Session = Depends(get_db)):
     return {"msg": "User created successfully"}
 
 @router.post("/login")
-async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    user = db.query(UserModel).filter(UserModel.email == form_data.username).first()  # Changed form_data.email to form_data.username
+async def login(form_data: UserL, db: Session = Depends(get_db)):
+    user = db.query(UserModel).filter(UserModel.email == form_data.email).first()
 
     if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="Invalid credentials")

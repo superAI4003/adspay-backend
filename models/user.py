@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Boolean
+from sqlalchemy import Column, String, Integer, Boolean, TIMESTAMP
 from db.database import Base
 
 class User(Base):
@@ -9,3 +9,4 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     isAdmin = Column(Boolean, default=False)
+    registered_at= Column (TIMESTAMP)
