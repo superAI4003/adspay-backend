@@ -24,5 +24,6 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
           cd /home/adspay-backend
+          git stash
           git pull
           sudo systemctl restart fastapi.service
