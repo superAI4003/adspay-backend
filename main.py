@@ -8,6 +8,7 @@ app = FastAPI()
 # Set CORS
 origins = [
     "http://localhost:3000", 
+    "http://161.35.15.35:3000",
      "*" # Adjust this to match the domain of your frontend if it's not running on localhost:3000
 ]
 
